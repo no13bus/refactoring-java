@@ -19,11 +19,7 @@ public class RentalInfo {
       double thisAmount = calculateAmount(movie, r.getDays());
 
       // add frequent bonus points
-      frequentEnterPoints++;
-      // add bonus for a two day new release rental
-      if (movie.getType() == MovieType.NEW_RELEASE && r.getDays() > 2) {
-        frequentEnterPoints++;
-      }
+      frequentEnterPoints += calculateFrequentEnterPoints(movie, r.getDays());
 
       result += "\t" + movie.getTitle() + "\t" + thisAmount + "\n";
       totalAmount += thisAmount;
@@ -62,5 +58,20 @@ public class RentalInfo {
         yield amount;
       }
     };
+  }
+
+  /**
+   * Calculates the frequent renter points for a given movie and rental days.
+   *
+   * @param movie the Movie being rented
+   * @param days  the number of days the movie is rented
+   * @return the frequent renter points earned for this rental
+   */
+  private int calculateFrequentEnterPoints(Movie movie, int days) {
+    int points = 1;
+    if (movie.getType() == MovieType.NEW_RELEASE && days > 2) {
+      points++;
+    }
+    return points;
   }
 }
