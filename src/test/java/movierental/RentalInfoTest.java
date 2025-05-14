@@ -1,6 +1,7 @@
 package movierental;
 
 import org.junit.jupiter.api.Test;
+
 import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -10,6 +11,8 @@ class RentalInfoTest {
 
     @Test
     void shouldReturnExpectedStatementForRegularAndRegularMovies() {
+        Movie youveGotMail = new Movie("id_ygm", "You've Got Mail", MovieType.REGULAR);
+        Movie matrix = new Movie("id_matrix", "Matrix", MovieType.REGULAR);
         String expected = """
                 Rental Record for C. U. Stomer
                 	You've Got Mail	3.5
@@ -21,13 +24,14 @@ class RentalInfoTest {
                 new Customer(
                         "C. U. Stomer",
                         Arrays.asList(
-                                new MovieRental("F001", 3),
-                                new MovieRental("F002", 1))));
+                                new MovieRental(youveGotMail, 3),
+                                new MovieRental(matrix, 1))));
         assertEquals(expected, result);
     }
 
     @Test
     void shouldReturnStatementForRegularMovieOneTwoThreeDays() {
+        Movie youveGotMail = new Movie("id_ygm", "You've Got Mail", MovieType.REGULAR);
         String regularOneDayExpected = """
                 Rental Record for User
                 	You've Got Mail	2.0
@@ -35,7 +39,7 @@ class RentalInfoTest {
                 You earned 1 frequent points
                 """;
         String regularOneDayResult = new RentalInfo().statement(
-                new Customer("User", Arrays.asList(new MovieRental("F001", 1))));
+                new Customer("User", Arrays.asList(new MovieRental(youveGotMail, 1))));
         assertEquals(regularOneDayExpected, regularOneDayResult);
 
         String regularTwoDaysExpected = """
@@ -45,7 +49,7 @@ class RentalInfoTest {
                 You earned 1 frequent points
                 """;
         String regularTwoDaysResult = new RentalInfo().statement(
-                new Customer("User", Arrays.asList(new MovieRental("F001", 2))));
+                new Customer("User", Arrays.asList(new MovieRental(youveGotMail, 2))));
         assertEquals(regularTwoDaysExpected, regularTwoDaysResult);
 
         String regularThreeDaysExpected = """
@@ -55,12 +59,13 @@ class RentalInfoTest {
                 You earned 1 frequent points
                 """;
         String regularThreeDaysResult = new RentalInfo().statement(
-                new Customer("User", Arrays.asList(new MovieRental("F001", 3))));
+                new Customer("User", Arrays.asList(new MovieRental(youveGotMail, 3))));
         assertEquals(regularThreeDaysExpected, regularThreeDaysResult);
     }
 
     @Test
     void shouldReturnStatementForNewReleaseMovieOneAndThreeDays() {
+        Movie fastAndFuriousX = new Movie("id_ffx", "Fast & Furious X", MovieType.NEW_RELEASE);
         String newReleaseOneDayExpected = """
                 Rental Record for User
                 	Fast & Furious X	3.0
@@ -68,7 +73,7 @@ class RentalInfoTest {
                 You earned 1 frequent points
                 """;
         String newReleaseOneDayResult = new RentalInfo().statement(
-                new Customer("User", Arrays.asList(new MovieRental("F004", 1))));
+                new Customer("User", Arrays.asList(new MovieRental(fastAndFuriousX, 1))));
         assertEquals(newReleaseOneDayExpected, newReleaseOneDayResult);
 
         String newReleaseThreeDaysExpected = """
@@ -78,12 +83,13 @@ class RentalInfoTest {
                 You earned 2 frequent points
                 """;
         String newReleaseThreeDaysResult = new RentalInfo().statement(
-                new Customer("User", Arrays.asList(new MovieRental("F004", 3))));
+                new Customer("User", Arrays.asList(new MovieRental(fastAndFuriousX, 3))));
         assertEquals(newReleaseThreeDaysExpected, newReleaseThreeDaysResult);
     }
 
     @Test
     void shouldReturnStatementForChildrensMovieOneThreeFourDays() {
+        Movie cars = new Movie("id_cars", "Cars", MovieType.CHILDRENS);
         String childrensOneDayExpected = """
                 Rental Record for User
                 	Cars	1.5
@@ -91,7 +97,7 @@ class RentalInfoTest {
                 You earned 1 frequent points
                 """;
         String childrensOneDayResult = new RentalInfo().statement(
-                new Customer("User", Arrays.asList(new MovieRental("F003", 1))));
+                new Customer("User", Arrays.asList(new MovieRental(cars, 1))));
         assertEquals(childrensOneDayExpected, childrensOneDayResult);
 
         String childrensThreeDaysExpected = """
@@ -101,7 +107,7 @@ class RentalInfoTest {
                 You earned 1 frequent points
                 """;
         String childrensThreeDaysResult = new RentalInfo().statement(
-                new Customer("User", Arrays.asList(new MovieRental("F003", 3))));
+                new Customer("User", Arrays.asList(new MovieRental(cars, 3))));
         assertEquals(childrensThreeDaysExpected, childrensThreeDaysResult);
 
         String childrensFourDaysExpected = """
@@ -111,12 +117,15 @@ class RentalInfoTest {
                 You earned 1 frequent points
                 """;
         String childrensFourDaysResult = new RentalInfo().statement(
-                new Customer("User", Arrays.asList(new MovieRental("F003", 4))));
+                new Customer("User", Arrays.asList(new MovieRental(cars, 4))));
         assertEquals(childrensFourDaysExpected, childrensFourDaysResult);
     }
 
     @Test
     void shouldReturnStatementForMixedMovieTypes() {
+        Movie youveGotMail = new Movie("id_ygm", "You've Got Mail", MovieType.REGULAR);
+        Movie fastAndFuriousX = new Movie("id_ffx", "Fast & Furious X", MovieType.NEW_RELEASE);
+        Movie cars = new Movie("id_cars", "Cars", MovieType.CHILDRENS);
         String mixedTypesExpected = """
                 Rental Record for User
                 	You've Got Mail	2.0
@@ -127,9 +136,9 @@ class RentalInfoTest {
                 """;
         String mixedTypesResult = new RentalInfo().statement(
                 new Customer("User", Arrays.asList(
-                        new MovieRental("F001", 2),
-                        new MovieRental("F004", 2),
-                        new MovieRental("F003", 3))));
+                        new MovieRental(youveGotMail, 2),
+                        new MovieRental(fastAndFuriousX, 2),
+                        new MovieRental(cars, 3))));
         assertEquals(mixedTypesExpected, mixedTypesResult);
     }
 
@@ -146,15 +155,8 @@ class RentalInfoTest {
     }
 
     @Test
-    void shouldThrowExceptionForInvalidMovieId() {
-        assertThrows(NullPointerException.class, () -> {
-            new RentalInfo().statement(
-                    new Customer("User", Arrays.asList(new MovieRental("INVALID", 2))));
-        });
-    }
-
-    @Test
     void shouldReturnStatementForZeroAndNegativeDays() {
+        Movie youveGotMail = new Movie("id_ygm", "You've Got Mail", MovieType.REGULAR);
         String zeroDaysExpected = """
                 Rental Record for User
                 	You've Got Mail	2.0
@@ -162,7 +164,7 @@ class RentalInfoTest {
                 You earned 1 frequent points
                 """;
         String zeroDaysResult = new RentalInfo().statement(
-                new Customer("User", Arrays.asList(new MovieRental("F001", 0))));
+                new Customer("User", Arrays.asList(new MovieRental(youveGotMail, 0))));
         assertEquals(zeroDaysExpected, zeroDaysResult);
 
         String negativeDaysExpected = """
@@ -172,7 +174,7 @@ class RentalInfoTest {
                 You earned 1 frequent points
                 """;
         String negativeDaysResult = new RentalInfo().statement(
-                new Customer("User", Arrays.asList(new MovieRental("F001", -5))));
+                new Customer("User", Arrays.asList(new MovieRental(youveGotMail, -5))));
         assertEquals(negativeDaysExpected, negativeDaysResult);
     }
 }
