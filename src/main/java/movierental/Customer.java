@@ -1,3 +1,5 @@
+package movierental;
+
 import java.util.List;
 
 public class Customer {
