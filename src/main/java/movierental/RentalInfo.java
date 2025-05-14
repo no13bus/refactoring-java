@@ -1,5 +1,8 @@
 package movierental;
 
+import movierental.strategy.RentalStrategy;
+import movierental.strategy.RentalStrategyFactory;
+
 public class RentalInfo {
 
     /**
@@ -15,10 +18,14 @@ public class RentalInfo {
         int frequentEnterPoints = 0;
         StringBuilder result = new StringBuilder("Rental Record for " + customer.getName() + "\n");
         for (MovieRental rental : customer.getRentals()) {
-            double thisAmount = rental.calculateAmount();
+            RentalStrategy strategy = RentalStrategyFactory.getStrategy(rental.getMovie().getType());
+            double thisAmount = strategy.calculateAmount(rental);
             // add frequent bonus points
-            frequentEnterPoints += rental.calculateFrequentEnterPoints();
-            result.append("\t").append(rental.getMovie().getTitle()).append("\t").append(thisAmount).append("\n");
+            frequentEnterPoints += strategy.calculatePoints(rental);
+            result.append("\t")
+                    .append(rental.getMovie().getTitle())
+                    .append("\t")
+                    .append(thisAmount).append("\n");
             totalAmount += thisAmount;
         }
         // add footer lines
