@@ -15,16 +15,17 @@ public class RentalInfo {
     int frequentEnterPoints = 0;
     String result = "Rental Record for " + customer.getName() + "\n";
     for (MovieRental r : customer.getRentals()) {
-      double thisAmount = calculateAmount(movies.get(r.getMovieId()), r.getDays());
+      Movie movie = movies.get(r.getMovieId());
+      double thisAmount = calculateAmount(movie, r.getDays());
 
       // add frequent bonus points
       frequentEnterPoints++;
       // add bonus for a two day new release rental
-      if (movies.get(r.getMovieId()).getType() == MovieType.NEW_RELEASE && r.getDays() > 2) {
+      if (movie.getType() == MovieType.NEW_RELEASE && r.getDays() > 2) {
         frequentEnterPoints++;
       }
 
-      result += "\t" + movies.get(r.getMovieId()).getTitle() + "\t" + thisAmount + "\n";
+      result += "\t" + movie.getTitle() + "\t" + thisAmount + "\n";
       totalAmount += thisAmount;
     }
     // add footer lines
