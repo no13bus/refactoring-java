@@ -1,4 +1,4 @@
-package movierental;
+package movierental.model;
 
 import java.util.List;
 

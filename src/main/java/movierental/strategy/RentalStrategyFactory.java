@@ -1,6 +1,6 @@
 package movierental.strategy;
 
-import movierental.MovieType;
+import movierental.model.MovieType;
 
 public class RentalStrategyFactory {
     public static RentalStrategy getStrategy(MovieType type) {

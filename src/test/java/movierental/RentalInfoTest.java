@@ -1,5 +1,10 @@
 package movierental;
 
+import movierental.model.Customer;
+import movierental.model.Movie;
+import movierental.model.MovieRental;
+import movierental.model.MovieType;
+import movierental.service.RentalInfo;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;

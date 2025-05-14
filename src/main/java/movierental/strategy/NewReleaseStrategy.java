@@ -1,5 +1,5 @@
 package movierental.strategy;
-import movierental.MovieRental;
+import movierental.model.MovieRental;
 
 public class NewReleaseStrategy implements RentalStrategy {
     private static final double PRICE_PER_DAY = 3.0;

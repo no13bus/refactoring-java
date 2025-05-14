@@ -1,5 +1,7 @@
-package movierental;
+package movierental.service;
 
+import movierental.model.Customer;
+import movierental.model.MovieRental;
 import movierental.strategy.RentalStrategy;
 import movierental.strategy.RentalStrategyFactory;
 

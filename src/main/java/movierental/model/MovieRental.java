@@ -1,4 +1,4 @@
-package movierental;
+package movierental.model;
 
 public class MovieRental {
     private Movie movie;

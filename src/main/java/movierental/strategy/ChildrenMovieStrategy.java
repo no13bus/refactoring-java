@@ -1,5 +1,5 @@
 package movierental.strategy;
-import movierental.MovieRental;
+import movierental.model.MovieRental;
 
 public class ChildrenMovieStrategy implements RentalStrategy {
     private static final double BASE_PRICE = 1.5;

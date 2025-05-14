@@ -1,6 +1,6 @@
 package movierental.strategy;
 
-import movierental.MovieRental;
+import movierental.model.MovieRental;
 
 public interface RentalStrategy {
     double calculateAmount(MovieRental rental);

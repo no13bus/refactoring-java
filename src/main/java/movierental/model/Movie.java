@@ -1,4 +1,4 @@
-package movierental;
+package movierental.model;
 
 public class Movie {
     private final String movieId;
