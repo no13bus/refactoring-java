@@ -15,39 +15,51 @@ public class RentalInfo {
     int frequentEnterPoints = 0;
     String result = "Rental Record for " + customer.getName() + "\n";
     for (MovieRental r : customer.getRentals()) {
-      double thisAmount = 0;
-
-      // determine amount for each movie
-      if (movies.get(r.getMovieId()).getType() == MovieType.REGULAR) {
-        thisAmount = 2;
-        if (r.getDays() > 2) {
-          thisAmount = ((r.getDays() - 2) * 1.5) + thisAmount;
-        }
-      }
-      if (movies.get(r.getMovieId()).getType() == MovieType.NEW_RELEASE) {
-        thisAmount = r.getDays() * 3;
-      }
-      if (movies.get(r.getMovieId()).getType() == MovieType.CHILDRENS) {
-        thisAmount = 1.5;
-        if (r.getDays() > 3) {
-          thisAmount = ((r.getDays() - 3) * 1.5) + thisAmount;
-        }
-      }
+      double thisAmount = calculateAmount(movies.get(r.getMovieId()), r.getDays());
 
       // add frequent bonus points
       frequentEnterPoints++;
       // add bonus for a two day new release rental
-      if (movies.get(r.getMovieId()).getType() == MovieType.NEW_RELEASE && r.getDays() > 2)
+      if (movies.get(r.getMovieId()).getType() == MovieType.NEW_RELEASE && r.getDays() > 2) {
         frequentEnterPoints++;
+      }
 
-      // print figures for this rental
       result += "\t" + movies.get(r.getMovieId()).getTitle() + "\t" + thisAmount + "\n";
-      totalAmount = totalAmount + thisAmount;
+      totalAmount += thisAmount;
     }
     // add footer lines
     result += "Amount owed is " + totalAmount + "\n";
     result += "You earned " + frequentEnterPoints + " frequent points\n";
 
     return result;
+  }
+
+  /**
+   * Calculates the rental amount for a given movie and rental days.
+   *
+   * @param movie the Movie being rented
+   * @param days  the number of days the movie is rented
+   * @return the calculated rental amount
+   */
+  private double calculateAmount(Movie movie, int days) {
+    return switch (movie.getType()) {
+      // Regular movies: 2 for first 2 days, then 1.5 per extra day
+      case REGULAR -> {
+        double amount = 2;
+        if (days > 2)
+          amount += (days - 2) * 1.5;
+        yield amount;
+      }
+      case NEW_RELEASE ->
+        // New releases: 3 per day
+        days * 3;
+      case CHILDRENS -> {
+        // Children's movies: 1.5 for first 3 days, then 1.5 per extra day
+        double amount = 1.5;
+        if (days > 3)
+          amount += (days - 3) * 1.5;
+        yield amount;
+      }
+    };
   }
 }
