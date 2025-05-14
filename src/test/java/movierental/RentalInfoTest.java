@@ -15,7 +15,7 @@ class RentalInfoTest {
                         "C. U. Stomer",
                         Arrays.asList(
                                 new MovieRental("F001", 3),
-                                new MovieRental("Wrong ID", 1))));
+                                new MovieRental("F002", 1))));
         assertEquals(expected, result);
     }
 }
