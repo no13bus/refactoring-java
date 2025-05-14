@@ -2,19 +2,18 @@ package movierental;
 
 public class Movie {
     private String title;
-    private String code;
+    private MovieType type;
 
-    public Movie(String title, String code) {
-
+    public Movie(String title, MovieType type) {
         this.title = title;
-        this.code = code;
+        this.type = type;
     }
 
     public String getTitle() {
         return title;
     }
 
-    public String getCode() {
-        return code;
+    public MovieType getType() {
+        return type;
     }
 }
