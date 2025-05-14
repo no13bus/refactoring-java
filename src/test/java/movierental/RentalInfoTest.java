@@ -89,7 +89,7 @@ class RentalInfoTest {
 
     @Test
     void shouldReturnStatementForChildrensMovieOneThreeFourDays() {
-        Movie cars = new Movie("id_cars", "Cars", MovieType.CHILDRENS);
+        Movie cars = new Movie("id_cars", "Cars", MovieType.CHILDREN);
         String childrensOneDayExpected = """
                 Rental Record for User
                 	Cars	1.5
@@ -125,7 +125,7 @@ class RentalInfoTest {
     void shouldReturnStatementForMixedMovieTypes() {
         Movie youveGotMail = new Movie("id_ygm", "You've Got Mail", MovieType.REGULAR);
         Movie fastAndFuriousX = new Movie("id_ffx", "Fast & Furious X", MovieType.NEW_RELEASE);
-        Movie cars = new Movie("id_cars", "Cars", MovieType.CHILDRENS);
+        Movie cars = new Movie("id_cars", "Cars", MovieType.CHILDREN);
         String mixedTypesExpected = """
                 Rental Record for User
                 	You've Got Mail	2.0

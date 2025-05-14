@@ -31,7 +31,7 @@ public class MovieRental {
                 yield amount;
             }
             case NEW_RELEASE -> days * 3;
-            case CHILDRENS -> {
+            case CHILDREN -> {
                 double amount = 1.5;
                 if (days > 3)
                     amount += (days - 3) * 1.5;
